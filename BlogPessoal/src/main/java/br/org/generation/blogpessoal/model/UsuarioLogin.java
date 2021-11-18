@@ -1,7 +1,5 @@
 package br.org.generation.blogpessoal.model;
 
-import java.time.LocalDate;
-
 public class UsuarioLogin {
 
 	private long id;

@@ -1,81 +1,94 @@
 package br.org.generation.blogpessoal.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "tb_usuario")
 public class Usuario {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    @NotBlank(message = "o atributo nome é obrigatório")
-    private String nome;
 
-    @NotBlank(message = "o atributo usuário é obrigatório")
-    @Email(message = "O atributo tema deve ser um email válido")
-    private String usuario;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
 
-    @NotBlank(message = "o atributo senha é obrigatório")
-    @Size(min = 8, message = "a senha deve conter pelo menos 8 caracteres")
-    private String senha;
+	@NotNull(message = "O atributo Nome é Obrigatório!")
+	private String nome;
 
-    @OneToMany(mappedBy = "usuario",cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("usuario")
-    private List<Postagem> postagem;
+	@NotNull(message = "O atributo Usuário é Obrigatório!")
+	@Email(message = "O atributo Usuário deve ser um email!")
+	private String usuario;
 
-    public Usuario(long id, String nome, String usuario, String senha) {
-        this.id = id;
-        this.nome = nome;
-        this.usuario = usuario;
-        this.senha = senha;
-    }
+	@NotBlank(message = "O atributo Senha é Obrigatória!")
+	@Size(min = 8, message = "A Senha deve ter no mínimo 8 caracteres")
+	private String senha;
 
-    public Usuario() {}
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
+	@JsonIgnoreProperties("usuario")
+	private List<Postagem> postagem;
 
-    public long getId() {
-        return id;
-    }
+	public Usuario(long id, String nome, String usuario, String senha) {
 
-    public void setId(long id) {
-        this.id = id;
-    }
+		this.id = id;
+		this.nome = nome;
+		this.usuario = usuario;
+		this.senha = senha;
 
-    public String getNome() {
-        return nome;
-    }
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+	public Usuario() {
+	}
 
-    public String getUsuario() {
-        return usuario;
-    }
+	public long getId() {
+		return id;
+	}
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    public String getSenha() {
-        return senha;
-    }
+	public String getNome() {
+		return nome;
+	}
 
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
-    public List<Postagem> getPostagem() {
-        return postagem;
-    }
+	public String getUsuario() {
+		return usuario;
+	}
 
-    public void setPostagem(List<Postagem> postagem) {
-        this.postagem = postagem;
-    }
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public List<Postagem> getPostagem() {
+		return postagem;
+	}
+
+	public void setPostagem(List<Postagem> postagem) {
+		this.postagem = postagem;
+	}
+
 }
